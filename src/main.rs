@@ -10,6 +10,10 @@ enum State {
 }
 
 fn convert_tilde_path(input_str: &str, homedir: &[u8]) -> Option<String> {
+    if homedir.len() == 0 {
+        return None;
+    }
+
     let input = input_str.as_bytes();
 
     let mut result = Vec::with_capacity(input_str.len() + homedir.len());
@@ -69,7 +73,7 @@ fn convert_tilde_path(input_str: &str, homedir: &[u8]) -> Option<String> {
 
 fn main() {
     let mut stdout = io::stdout();
-    let home_dir = env::var("HOME").unwrap();
+    let home_dir = env::var("HOME").unwrap_or_else(|_| "".to_string());
     let homedir_u8 = home_dir.as_bytes();
 
     let mut args = env::args();
