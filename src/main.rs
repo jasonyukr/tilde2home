@@ -12,7 +12,7 @@ enum State {
 fn convert_tilde_path(input_str: &str, homedir: &[u8]) -> Option<String> {
     let input = input_str.as_bytes();
 
-    let mut result = Vec::new();
+    let mut result = Vec::with_capacity(input_str.len() + homedir.len());
     let mut state = State::Normal;
     let mut init_done = false;
 
